@@ -179,6 +179,7 @@ public class Handler implements RequestHandler<Request, Response> {
             pop.add(initialize());
 
             int angle = pop.get(i).getAngle();
+            int iterations = pop.get(i).getIterations();
             String axiom = pop.get(i).getAxiom();
             String rules [] = pop.get(i).getRules();
 
@@ -188,6 +189,7 @@ public class Handler implements RequestHandler<Request, Response> {
                 .withString("type", "design")
                 .withString("axiom", axiom)
                 .withNumber("angle", angle)
+                .withNumber("iterations", iterations)
                 .withList("rules", rules);
 
             PutItemOutcome outcome = table.putItem(item);
