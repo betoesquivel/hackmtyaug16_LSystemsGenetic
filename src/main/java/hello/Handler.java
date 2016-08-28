@@ -203,6 +203,5 @@ public class Handler implements RequestHandler<Request, Response> {
             }
         }
 		return new Response("Go Serverless cessfully!", input);
-	}
-
+  }
 }
