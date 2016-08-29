@@ -30,8 +30,8 @@ public class LSystem {
         angle = 0;
         axiom = "";
         rules = new String [10];
-        rules[0] ="";
-        constants ="";
+        rules[0] = "";
+        constants = "A";
         iterations = 0;
         rank = 0;
     }
@@ -41,7 +41,7 @@ public class LSystem {
         this.iterations = iterations;
         this.axiom = axiom;
         this.rules = rules;
-        this.constants = constants;
+        this.constants = "A";
         this.rank = rank;
     }
 
@@ -170,7 +170,7 @@ public class LSystem {
 
         String bucketName     = "hackmtyaug16-bigben-lsystems";
         String uploadFileName = id+".txt";
-        AmazonS3 s3client = new AmazonS3Client(new ProfileCredentialsProvider());
+        AmazonS3 s3client = new AmazonS3Client();
         try {
             s3client.putObject( bucketName, uploadFileName, payload );
         } catch (AmazonServiceException ase) {
