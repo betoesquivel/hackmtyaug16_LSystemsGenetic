@@ -91,7 +91,7 @@ public class CrossOver implements RequestHandler<CrossOverRequest, CrossOverResp
     }
 
     @Override
-    public CrossOverResponse handleRequest(CrossOverRequest input, Context context) throws IOException {
+    public CrossOverResponse handleRequest(CrossOverRequest input, Context context) {
 
         AmazonDynamoDBClient client = new AmazonDynamoDBClient();
         client.setRegion(Region.getRegion(Regions.EU_WEST_1));
@@ -102,10 +102,10 @@ public class CrossOver implements RequestHandler<CrossOverRequest, CrossOverResp
         l.setId( UUID.randomUUID().toString() );
 
         //write do dynamo
-        LSystem.saveLSystem( l, dynamodb );
+        LSystem.saveLSystem( l, dynamoDB );
 
         //expand
-        String g_commands = angle+":" + LSystem.expand(l);
+        String g_commands = l.getAngle() + ":" + LSystem.expand(l);
         //write to s3
         LSystem.uploadToS3( l.getId(), g_commands );
 

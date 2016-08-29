@@ -19,10 +19,10 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 
-public class Mutate implements RequestHandler<Request, Response>{
+public class Mutate implements RequestHandler<MutateRequest, MutateResponse>{
 
     @Override
-    public MutateResponse handleRequest(MutateRequest input, Context context) throws IOException{
+    public MutateResponse handleRequest(MutateRequest input, Context context) {
 
         AmazonDynamoDBClient client = new AmazonDynamoDBClient();
         client.setRegion(Region.getRegion(Regions.EU_WEST_1));
@@ -146,6 +146,6 @@ public class Mutate implements RequestHandler<Request, Response>{
         //save in S3
         LSystem.uploadToS3( offspring.getId(), g_commands );
 
-        return new MutateResponse(id);
+        return new MutateResponse(offspring.getId());
     }
 }

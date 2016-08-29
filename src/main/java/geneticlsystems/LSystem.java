@@ -1,5 +1,6 @@
 package geneticlsystems;
 
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
@@ -139,7 +140,7 @@ public class LSystem {
         return axiom;
     }
 
-    public static saveLSystem(LSystem individual, dynamoDB) {
+    public static void saveLSystem(LSystem individual, DynamoDB dynamoDB) {
 
         Table table = dynamoDB.getTable("lsystems");
 
@@ -160,10 +161,12 @@ public class LSystem {
                 .withList("rules", rules)
                 .withString("constants", constants)
                 .withNumber("rank", rank);
+        
+        PutItemOutcome outcome = table.putItem(item);
 
     }
 
-    public static uploadToS3(String id, String payload) throws IOException{
+    public static void uploadToS3(String id, String payload) {
 
         String bucketName     = "hackmtyaug16-bigben-lsystems";
         String uploadFileName = id+".txt";
@@ -189,6 +192,5 @@ public class LSystem {
                     "such as not being able to access the network.");
             System.out.println("Error Message: " + ace.getMessage());
         }
-
     }
 }

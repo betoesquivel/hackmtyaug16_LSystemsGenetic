@@ -1,5 +1,6 @@
 package geneticlsystems;
 
+import java.io.IOException;
 import java.util.*;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -88,7 +89,7 @@ public class Initialize implements RequestHandler<InitializeRequest, InitializeR
     }
 
     @Override
-    public InitializeResponse handleRequest(InitializeRequest input, Context context) throws IOException {
+    public InitializeResponse handleRequest(InitializeRequest input, Context context) {
         AmazonDynamoDBClient client = new AmazonDynamoDBClient();
         client.setRegion(Region.getRegion(Regions.EU_WEST_1));
         DynamoDB dynamoDB = new DynamoDB(client);
@@ -101,11 +102,11 @@ public class Initialize implements RequestHandler<InitializeRequest, InitializeR
             // save to dynamodb
             LSystem.saveLSystem(l, dynamoDB);
 
-            String g_commands = angle+":"+ LSystem.expand(l);
+            String g_commands = l.getAngle() + ":" +  LSystem.expand(l);
             // write to s3
-            LSystem.uploadToS3(l.getId, g_commands);
+            LSystem.uploadToS3(l.getId(), g_commands);
         }
 
-        return new InitializeResponse(id);
+        return new InitializeResponse("");
     }
 }
