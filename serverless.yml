@@ -11,25 +11,25 @@
 #
 # Happy Coding!
 
-service: bigben-lsystems-parambuilder # NOTE: update this with your service name
+service: bigben-lsystems-genetic # NOTE: update this with your service name
 
 provider:
   name: aws
   runtime: java8
 # you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:ListBucket"
+      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "hackmtyaug16-bigben-lsystems" } ] ]  }
+    - Effect: "Allow"
+      Action:
+        - "s3:PutObject"
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - "Ref" : "hackmtyaug16-bigben-lsystems"
 
 # you can overwrite defaults here
 defaults:
@@ -42,11 +42,15 @@ package:
 #    - include-me.java
 #  exclude:
 #    - exclude-me.java
-  artifact: build/distributions/hello.zip
+  artifact: build/distributions/geneticlsystems.zip
 
 functions:
-  buildparams:
-    handler: hello.Handler
+  initialize:
+    handler: geneticlsystems.Initialize
+  mutate:
+    handler: geneticlsystems.Mutate
+  crossover:
+    handler: geneticlsystems.CrossOver
 
 #   you can add any of the following events
 #   events:

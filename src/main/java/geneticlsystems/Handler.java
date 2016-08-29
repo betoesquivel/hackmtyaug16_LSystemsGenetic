@@ -1,4 +1,4 @@
-package hello;
+package geneticlsystems;
 
 import java.io.IOException;
 import java.util.*;
@@ -168,6 +168,7 @@ public class Handler implements RequestHandler<Request, Response> {
 
 	@Override
 	public Response handleRequest(Request input, Context context) {
+
         AmazonDynamoDBClient client = new AmazonDynamoDBClient();
         client.setRegion(Region.getRegion(Regions.EU_WEST_1));
         DynamoDB dynamoDB = new DynamoDB(client);
