@@ -137,6 +137,7 @@ public class LSystem {
             prev = axiom;
         }
         l.setIterations(i);
+        System.out.println("Saved iterations: " + i);
         return axiom;
     }
 

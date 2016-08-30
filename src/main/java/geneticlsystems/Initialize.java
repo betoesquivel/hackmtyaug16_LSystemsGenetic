@@ -99,10 +99,11 @@ public class Initialize implements RequestHandler<InitializeRequest, InitializeR
             LSystem l = initialize();
             l.setId( UUID.randomUUID().toString() );
 
+            String g_commands = l.getAngle() + ":" +  LSystem.expand(l);
+
             // save to dynamodb
             LSystem.saveLSystem(l, dynamoDB);
 
-            String g_commands = l.getAngle() + ":" +  LSystem.expand(l);
             // write to s3
             LSystem.uploadToS3(l.getId(), g_commands);
         }
