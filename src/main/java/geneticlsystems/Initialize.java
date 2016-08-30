@@ -21,7 +21,7 @@ public class Initialize implements RequestHandler<InitializeRequest, InitializeR
         //generates a random individual
         //initialize angle
         Random r = new Random();
-        int angle = r.nextInt(360);
+        int angle = r.nextInt(359);
         while(angle<30 || angle > 330 || (angle >150 && angle < 210)){
             angle = r.nextInt(360);
         }
