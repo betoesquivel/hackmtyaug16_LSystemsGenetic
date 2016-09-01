@@ -102,43 +102,56 @@ public class LSystem {
     }
 
     public static String expand(LSystem l){
-        String axiom = l.getAxiom();
-        String rules [] = l.getRules();
-        String letters ="";
+          String axiom = l.getAxiom();
+          String rules [] = l.getRules();
+          String letters ="";
 
-        for(int i =0; i<rules.length; i++){
-            letters+= rules[i].substring(0,1);
-        }
-        String prev = "";
-        int i;
-        for(i =0; i<20; i++) {
-            for(int j =0; j<axiom.length(); j++) {
-                int index = letters.indexOf(axiom.charAt(j));
-                if (index >= 0) {
-                    //letter, expand with rule
-                    String r = rules[index].substring(2);
-                    axiom = axiom.substring(0, j) + r + axiom.substring(j + 1);
-                    j += r.length() - 1;
-                }
-            }
-            if(axiom.length() == prev.length()){
-                    if(axiom.equals(prev)){
-                        break;
-                    }
-            }
-            if(axiom.length()>70000){
-                axiom = prev;
-                System.out.println(axiom);
-                System.out.println(i);
-                i--;
-                break;
+          for(int i =0; i<rules.length; i++){
+              letters+= rules[i].substring(0,1);
+          }
+          String prev = "";
+          int i;
+          for(i = 1; i < 20; i++) {
+              for(int j = 0; j < axiom.length(); j++) {
+                  int index = letters.indexOf(axiom.charAt(j));
+                  if (index >= 0) {
+                      //letter, expand with rule
+                      String r = rules[index].substring(2);
+                      axiom = axiom.substring(0, j) + r + axiom.substring(j + 1);
+                      j += r.length() - 1;
+                  }
+              }
+              if(axiom.length() == prev.length()){
+                      if(axiom.equals(prev)){
+                          break;
+                      }
+              }
+              if(axiom.length()>80000){
+                  axiom = prev;
+                  i--;
+                  break;
 
-            }
-            prev = axiom;
-        }
-        l.setIterations(i);
-        System.out.println("Saved iterations: " + i);
-        return axiom;
+              }
+              prev = axiom;
+          }
+          if(axiom.length()<20000) {
+              String tempAxiom = axiom;
+              for (int j = 0; j < letters.length(); j++) {
+                  String s = letters.substring(j, j+1);
+                  tempAxiom = tempAxiom.replace(s, "");
+              }
+              if(axiom.length() - tempAxiom.length()<5){
+                  l.setRank(5);
+              }
+              tempAxiom = axiom;
+              tempAxiom = tempAxiom.replace("+", "");
+              tempAxiom = tempAxiom.replace("-","");
+              if(axiom.length() - tempAxiom.length()<5){
+                  l.setRank(5);
+              }
+          }
+          l.setIterations(i);
+          return axiom;
     }
 
     public static void saveLSystem(LSystem individual, DynamoDB dynamoDB) {
